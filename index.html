@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Circle Area Calculator</title>
+
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #0f0f14, #1c1f2b);
+      --card-bg: rgba(25, 28, 40, 0.9);
+      --border: rgba(255, 255, 255, 0.08);
+
+      --text-main: #f1f1f1;
+      --text-muted: #a0a4b8;
+
+      --accent: #4fd1c5;
+      --accent-dark: #2cb1a3;
+
+      --error: #ff6b6b;
+      --success: #9fffe0;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Inter", "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+    }
+
+    .calculator {
+      width: 100%;
+      max-width: 420px;
+      padding: 34px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      margin-bottom: 6px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 26px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    input[type="number"] {
+      padding: 14px 16px;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #11131c;
+      color: var(--text-main);
+      outline: none;
+      transition: border 0.25s ease;
+    }
+
+    input::placeholder {
+      color: #7c8199;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    /* ===== Number input arrows styling ===== */
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: 1;
+      background: var(--accent);
+      border-radius: 4px;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button:hover {
+      background: var(--accent-dark);
+    }
+
+    input[type="number"] {
+      scrollbar-color: var(--accent) #11131c;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      background: var(--accent);
+      color: #0b0d12;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.15s ease;
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .result {
+      margin-top: 22px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #0f1119;
+      text-align: center;
+      font-size: 1rem;
+      display: none;
+    }
+
+    .result.success {
+      color: var(--success);
+      display: block;
+    }
+
+    .result.error {
+      color: var(--error);
+      display: block;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 0.72rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    /* ===== NUMBER INPUT SPINNER — DARK THEME FIX ===== */
+
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  background-color: #1a1d2b;       /* matches input bg */
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0.8;
+  filter: invert(1) brightness(0.7); /* removes white look */
+  cursor: pointer;
+}
+
+/* Hover state */
+input[type="number"]::-webkit-inner-spin-button:hover {
+  opacity: 1;
+  filter: invert(1) brightness(0.9);
+}
+  </style>
+</head>
+
+<body>
+  <div class="calculator">
+    <h1>Circle Area Calculator</h1>
+    <p class="subtitle">Minimal • Accurate • Fast</p>
+
+    <div class="field">
+      <label for="radiusInput">Radius</label>
+      <input
+        type="number"
+        id="radiusInput"
+        placeholder="Enter radius"
+        min="0"
+      />
+    </div>
+
+    <button onclick="calculateArea()">Calculate Area</button>
+
+    <div id="result" class="result"></div>
+
+    <div class="footer-note">Formula used: π × r²</div>
+  </div>
+
+  <script>
+    function calculateArea() {
+      const radius = Number(document.getElementById("radiusInput").value);
+      const result = document.getElementById("result");
+
+      if (!radius || radius <= 0) {
+        result.className = "result error";
+        result.textContent = "Enter a valid positive radius.";
+        return;
+      }
+
+      const area = Math.PI * radius * radius;
+
+      result.className = "result success";
+      result.textContent = `Area: ${area.toFixed(2)} units²`;
+    }
+  </script>
+</body>
+</html>
